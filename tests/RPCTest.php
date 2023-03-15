@@ -6,20 +6,21 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Exception;
 use DOMDocument;
+use PHPUnit\Util\Xml;
 
 final class RPCTest extends TestCase
 {
     protected static $config;
     protected static $cleanupMediaClips = array();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $config_file = dirname(__FILE__) . '/config.yaml';
         $this->assertFileExists($config_file);
         self::$config = Yaml::parseFile($config_file);
     }
 
-    public function testCanBeCreated()
+    public function testCanBeCreated(): void
     {
         // Try to create an instance with the rpctoken.
         try {
@@ -41,7 +42,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testDoActionCreateMediaClip()
+    public function testDoActionCreateMediaClip(): void
     {
         try {
             if (self::$config['useRPCTokenForUnitTests']) {
@@ -67,7 +68,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testXmlCreateDeleteMediaClip()
+    public function testXmlCreateDeleteMediaClip(): void
     {
         try {
             if (self::$config['useRPCTokenForUnitTests']) {
@@ -135,7 +136,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testJsonSearchMediaclips()
+    public function testJsonSearchMediaclips(): void
     {
         try {
             if (self::$config['useRPCTokenForUnitTests']) {
@@ -169,7 +170,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testSapiGetPublication()
+    public function testSapiGetPublication(): void
     {
         try {
             if (self::$config['useRPCTokenForUnitTests']) {
@@ -201,7 +202,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testUriGetPublication()
+    public function testUriGetPublication(): void
     {
         try {
             if (self::$config['useRPCTokenForUnitTests']) {
@@ -230,7 +231,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testCalculateRequestToken()
+    public function testCalculateRequestToken(): void
     {
         if (self::$config['useRPCTokenForUnitTests']) {
             try {
@@ -254,7 +255,7 @@ final class RPCTest extends TestCase
         }
     }
 
-    public function testSapiCleanupMediaClips()
+    public function testSapiCleanupMediaClips(): void
     {
         try {
             if (self::$config['useRPCTokenForUnitTests']) {
