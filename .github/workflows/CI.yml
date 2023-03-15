@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run_tests:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-20.04
+        php:
+        - 7.1
+        - 7.2
+        - 7.3
+        - 7.4
+        - 8.0
+        - 8.1
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@2.24.0
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, libxml, mbstring, zip, pcntl, pdo, pdo_mysql, pdo_sqlite, bcmath, intl, gd, exif, iconv, json, ctype
+          coverage: none
+          tools: composer:v2
+
+      - name: Setup Bluebillywig config
+        run: ./travis-create-config.sh
+        env:
+          VMSRPC_PUBLICATION: ${{ secrets.VMSRPC_PUBLICATION }}
+          VMSRPC_RPCTOKEN: ${{ secrets.VMSRPC_RPCTOKEN }}
+          VMSRPC_USER: ${{ secrets.VMSRPC_USER }}
+          VMSRPC_PASSWORD: ${{ secrets.VMSRPC_PASSWORD }}
+          VMSRPC_TOKENS_FOR_TESTS: ${{ secrets.VMSRPC_TOKENS_FOR_TESTS || false }}
+
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-progress --no-scripts
+
+      - name: run tests
+        run: vendor/bin/phpunit
