@@ -15,7 +15,7 @@ final class RPCTest extends TestCase
 
     protected function setUp(): void
     {
-        $config_file = dirname(__FILE__) . '/config.yaml';
+        $config_file = __DIR__ . '/config.yaml';
         $this->assertFileExists($config_file);
         self::$config = Yaml::parseFile($config_file);
     }

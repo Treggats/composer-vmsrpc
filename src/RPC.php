@@ -186,8 +186,8 @@ class RPC
             }
         }
         VMSUtil::debugmsg("will call fetch","vmsrpc");
-        $response=$this->fetch($uri, NULL);
-        return $response;
+
+        return $this->fetch($uri, NULL);
     }
 
     /**
